@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adum-AI</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #444;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .chat-box {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        .chat-message {
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .you {
+            background-color: #e7f3ff;
+            text-align: right;
+            /* color: #0056b3; */
+        }
+        .ai {
+            background-color: #eaf8e3;
+            text-align: left;
+            /* color: #228B22; */
+            /* white-space: pre-wrap; Ensures formatting is preserved */
+        }
+        form {
+            display: flex;
+            gap: 10px;
+        }
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 12px 20px;
+            color: white;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                margin: 10px auto;
+                padding: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .chat-box {
+                max-height: 400px;
+                padding: 10px;
+            }
+            .chat-message {
+                font-size: 14px;
+                padding: 8px;
+            }
+            input[type="text"], button {
+                font-size: 14px;
+                padding: 10px;
+            }
+            button {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 18px;
+            }
+            .chat-box {
+                max-height: 300px;
+            }
+            .chat-message {
+                font-size: 12px;
+                padding: 6px;
+            }
+            input[type="text"] {
+                font-size: 12px;
+                padding: 8px;
+            }
+            button {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Chatbot</h1>
+        <div class="chat-box">
+            {% for message in chat_history %}
+                <div class="chat-message {{ message["sender"] }}">
+                    <strong>{{ message["sender"]|capitalize }}:</strong> 
+                    <span>{{ message["text"]|safe }}</span>
+                </div>
+            {% endfor %}
+        </div>
+        <form method="POST">
+            {{ form.hidden_tag() }}
+            <input type="text" name="prompt" placeholder="Ask me....." required>
+            <button type="submit">Ask</button>
+        </form>
+    </div>
+</body>
+</html>
